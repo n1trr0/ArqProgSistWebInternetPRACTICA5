@@ -124,8 +124,8 @@ export const resolvers = {
             const myCourse = await ctx.CoursesCollection.findOne({_id:new ObjectId(args.courseId)});
             if(!myStudent || !myCourse){ return null; }
 
-            await ctx.CoursesCollection.updateOne({_id: new ObjectId(args.courseId) },{$pull: { enrolledStudents: args.studentId }});  
-            await ctx.StudentsCollection.updateOne({_id: new ObjectId(args.studentId) },{$pull: {enrolledCourses:args.courseId}});
+            await ctx.CoursesCollection.updateOne({_id: new ObjectId(args.courseId) },{$pull: { enrolledStudents: new ObjectId(args.studentId)}});  
+            await ctx.StudentsCollection.updateOne({_id: new ObjectId(args.studentId) },{$pull: {enrolledCourses: new ObjectId(args.courseId)}});
             const course = await ctx.CoursesCollection.findOne({_id:new ObjectId(args.courseId)});
             return course;
         },
